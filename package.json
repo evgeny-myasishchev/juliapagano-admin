@@ -11,5 +11,8 @@
     "url": "git+https://github.com/evgeny-myasishchev/juliapagano-admin.git"
   },
   "author": "Evgeny Myasishchev",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "2.2.0-rc.2"
+  }
 }
