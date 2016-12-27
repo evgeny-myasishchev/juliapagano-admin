@@ -1,0 +1,15 @@
+{
+  "name": "juliapagano-admin",
+  "version": "0.0.1",
+  "description": "Admin area of juliapagano website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgeny-myasishchev/juliapagano-admin.git"
+  },
+  "author": "Evgeny Myasishchev",
+  "license": "MIT"
+}
