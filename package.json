@@ -4,6 +4,7 @@
   "description": "Admin area of juliapagano website",
   "main": "server.js",
   "scripts": {
+    "build" : "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,8 +14,15 @@
   "author": "Evgeny Myasishchev",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^3.12.2",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
     "html-webpack-plugin": "^2.24.1",
     "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
