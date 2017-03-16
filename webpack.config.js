@@ -36,7 +36,7 @@ module.exports = () => ({
       filename: '[name].bundle.css',
     }),
     new HtmlWebpackPlugin({
-      template: './app/index.html',
+      template: './app/templates/index.html',
       filename: 'index.html',
       inject: 'body',
     }),
