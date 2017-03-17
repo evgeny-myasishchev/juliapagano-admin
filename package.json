@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "npm run lint",
+    "test": "mocha -b test/specs --recursive",
+    "lint": "eslint ./app ./test"
   },
   "repository": {
     "type": "git",
