@@ -17,12 +17,16 @@
   "author": "Evgeny Myasishchev",
   "license": "MIT",
   "dependencies": {
+    "auth0-lock": "^10.14.0",
     "bluebird": "^3.5.0",
     "bootstrap": "^3.3.7",
+    "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
     "redux": "^3.6.0",
     "superagent": "^3.5.0"
   },

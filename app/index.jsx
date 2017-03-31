@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './containers/App';
-
 import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import Routes from './routes';
+
+ReactDOM.render(<Routes />, document.getElementById('root'));
