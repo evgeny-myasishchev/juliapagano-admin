@@ -5,6 +5,7 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Routes from './routes';
+import MainLayout from './containers/MainLayout';
 
-ReactDOM.render(<Routes />, document.getElementById('root'));
+
+ReactDOM.render(<MainLayout />, document.getElementById('root'));

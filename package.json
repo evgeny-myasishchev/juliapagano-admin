@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --history-api-fallback",
     "pretest": "npm run lint",
     "test": "mocha -b test/specs --recursive",
     "lint": "eslint ./app ./test"

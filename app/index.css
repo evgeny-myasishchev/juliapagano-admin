@@ -1,5 +1,5 @@
 /*App specific styles to be here*/
 
-body > .container {
+body > #root {
   padding: 40px 15px;
 }
