@@ -7,5 +7,4 @@ import ReactDOM from 'react-dom';
 
 import MainLayout from './containers/MainLayout';
 
-
 ReactDOM.render(<MainLayout />, document.getElementById('root'));

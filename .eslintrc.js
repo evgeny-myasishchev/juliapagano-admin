@@ -10,5 +10,6 @@ module.exports = {
     },
     "rules" : {
         "max-len" : ["error", 150],
+        "import/first" : ["error", { 'absolute-first' : true }],
     }
 };

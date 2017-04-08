@@ -6,7 +6,7 @@ import Pages from '../components/Pages';
 
 const BootstrapNavLink = ({ label, to }) => (
   <Route
-    path={to} exact children={({ match }) => ( // eslint-disable-line react/no-children-prop1
+    path={to} exact children={({ match }) => ( // eslint-disable-line react/no-children-prop
       <li className={match ? 'active' : ''}>
         <Link to={to}>{label}</Link>
       </li>
