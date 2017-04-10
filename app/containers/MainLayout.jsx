@@ -1,8 +1,12 @@
-import { Link, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Link, Redirect, Route, BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 
+import AuthService from '../auth/AuthService';
 import Home from '../components/Home';
+import Login from '../components/Login';
 import Pages from '../components/Pages';
+
+const auth = new AuthService('Nx0izLzYRVQ0zOSaeXw4ttStmg7jvmyQ', 'infora-soft.eu.auth0.com');
 
 const BootstrapNavLink = ({ label, to }) => (
   <Route
@@ -17,6 +21,27 @@ const BootstrapNavLink = ({ label, to }) => (
 BootstrapNavLink.propTypes = {
   label: React.PropTypes.string.isRequired,
   to: React.PropTypes.string.isRequired,
+};
+
+const PrivateRoute = ({ component, ...rest }) => (
+  <Route
+    {...rest} render={props => (
+    auth.loggedIn() ? (
+      React.createElement(component, props)
+    ) : (
+      <Redirect
+        to={{
+          pathname: '/login',
+          state: { from: props.location }, // eslint-disable-line react/prop-types
+        }}
+      />
+    )
+  )}
+  />
+);
+
+PrivateRoute.propTypes = {
+  component: React.PropTypes.func.isRequired,
 };
 
 export default function App() {
@@ -48,7 +73,8 @@ export default function App() {
 
       <div className="container">
         <Route exact path="/" component={Home} />
-        <Route path="/pages" component={Pages} />
+        <PrivateRoute path="/pages" component={Pages} />
+        <Route path="/login" component={Login} />
       </div>
     </div>
   </Router>);
