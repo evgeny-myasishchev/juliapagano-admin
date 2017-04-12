@@ -45,7 +45,7 @@ PrivateRoute.propTypes = {
 };
 
 export default function App() {
-  return (<Router>
+  return (<Router auth={auth}>
     <div>
       <nav className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
@@ -74,7 +74,7 @@ export default function App() {
       <div className="container">
         <Route exact path="/" component={Home} />
         <PrivateRoute path="/pages" component={Pages} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={() => <Login auth={auth} />} auth={auth} />
       </div>
     </div>
   </Router>);
