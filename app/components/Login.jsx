@@ -3,9 +3,13 @@ import React from 'react';
 import AuthService from '../auth/AuthService';
 
 export default function Login({ auth }) {
-  console.log(auth);
-  auth.login();
-  return <h1>Hello #Login</h1>;
+  // auth.login();
+  return (
+    <div>
+      <h1>Hello #Login</h1>
+      <button onClick={() => auth.login()}>Login</button>
+    </div>
+  );
 }
 
 Login.propTypes = {
