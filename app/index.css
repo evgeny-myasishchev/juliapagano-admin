@@ -1,5 +1,5 @@
 /*App specific styles to be here*/
 
-body > #root {
-  padding: 40px 15px;
+body {
+  padding-top: 50px;
 }

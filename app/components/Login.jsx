@@ -2,14 +2,27 @@ import React from 'react';
 
 import AuthService from '../auth/AuthService';
 
-export default function Login({ auth }) {
-  // auth.login();
-  return (
-    <div>
-      <h1>Hello #Login</h1>
-      <button onClick={() => auth.login()}>Login</button>
-    </div>
-  );
+import './Login.css';
+
+export default class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.auth = props.auth;
+  }
+
+  componentDidMount() {
+    this.auth.lock.show();
+  }
+
+  componentWillUnmount() {
+    this.auth.lock.hide();
+  }
+
+  render() {
+    return (
+      <div className="row" id="auth-container">Loading...</div>
+    );
+  }
 }
 
 Login.propTypes = {

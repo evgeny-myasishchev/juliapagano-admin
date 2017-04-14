@@ -12,6 +12,7 @@ export default class AuthService extends EventEmitter {
     super();
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, {
+      container: 'auth-container',
       auth: {
         redirectUrl: `${window.location.origin}/login`,
         responseType: 'token',
@@ -21,8 +22,6 @@ export default class AuthService extends EventEmitter {
     this.lock.on('authenticated', this.doAuthentication.bind(this));
     // Add callback for lock `authorization_error` event
     this.lock.on('authorization_error', this.authorizationError.bind(this));
-    // binds login functions to keep this context
-    this.login = this.login.bind(this);
   }
 
   doAuthentication(authResult) {
@@ -43,11 +42,6 @@ export default class AuthService extends EventEmitter {
   authorizationError(error) {
     // Unexpected authentication error
     console.log('Authentication Error', error); // eslint-disable-line no-console
-  }
-
-  login() {
-    // Call the show method to display the widget.
-    this.lock.show();
   }
 
   loggedIn() {
