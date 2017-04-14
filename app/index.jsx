@@ -2,9 +2,19 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import './index.css';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { render } from 'react-dom';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import MainLayout from './containers/MainLayout';
+import auth from './redux/modules/auth';
 
-ReactDOM.render(<MainLayout />, document.getElementById('root'));
+const store = createStore(auth);
+
+render(
+  <Provider store={store}>
+    <MainLayout />
+  </Provider>,
+  document.getElementById('root'),
+);
