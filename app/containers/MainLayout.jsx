@@ -2,9 +2,9 @@ import { Link, Redirect, Route, BrowserRouter as Router } from 'react-router-dom
 import React from 'react';
 
 import AuthService from '../auth/AuthService';
-import Home from '../components/Home';
-import Login from '../components/Login';
-import Pages from '../components/Pages';
+import Home from './Home';
+import Login from './Login';
+import Pages from './Pages';
 
 const auth = new AuthService('Nx0izLzYRVQ0zOSaeXw4ttStmg7jvmyQ', 'infora-soft.eu.auth0.com');
 
