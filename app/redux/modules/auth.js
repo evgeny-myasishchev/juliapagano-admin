@@ -8,9 +8,9 @@ const LOGOUT = 'juliapagano-admin/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'juliapagano-admin/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'juliapagano-admin/auth/LOGOUT_FAIL';
 
-const initialState = {
+const initialState = Object.freeze({
   loaded: false,
-};
+});
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
