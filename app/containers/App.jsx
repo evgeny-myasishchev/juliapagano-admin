@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import React from 'react';
 
 // const auth = new AuthService('Nx0izLzYRVQ0zOSaeXw4ttStmg7jvmyQ', 'infora-soft.eu.auth0.com');
@@ -14,7 +15,7 @@ BootstrapNavLink.propTypes = {
   to: React.PropTypes.string.isRequired,
 };
 
-export default function App({ children }) {
+function App({ children }) {
   return (
     <div>
       <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -51,3 +52,10 @@ export default function App({ children }) {
 App.propTypes = {
   children: React.PropTypes.element.isRequired,
 };
+
+export default connect(
+    (state, ownProps) =>  // mapStateToProps
+       ({
+         children: ownProps.children,
+       }),
+)(App);

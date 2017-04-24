@@ -7,15 +7,15 @@ import './Login.css';
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.auth = props.auth;
+    // this.auth = props.auth;
   }
 
   componentDidMount() {
-    this.auth.lock.show();
+    // this.auth.lock.show();
   }
 
   componentWillUnmount() {
-    this.auth.lock.hide();
+    // this.auth.lock.hide();
   }
 
   render() {
@@ -24,7 +24,3 @@ export default class Login extends React.Component {
     );
   }
 }
-
-Login.propTypes = {
-  auth: React.PropTypes.instanceOf(AuthService).isRequired,
-};
