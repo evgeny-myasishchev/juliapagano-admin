@@ -2,8 +2,6 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import React from 'react';
 
-// const auth = new AuthService('Nx0izLzYRVQ0zOSaeXw4ttStmg7jvmyQ', 'infora-soft.eu.auth0.com');
-
 const BootstrapNavLink = ({ label, to }) => (
   <li>
     <Link to={to}>{label}</Link>

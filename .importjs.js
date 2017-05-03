@@ -8,6 +8,7 @@ module.exports = {
   aliases : {
     // lodash : 'lodash',
     Promise : 'bluebird',
-    request : 'superagent'
+    request : 'superagent',
+    base64js : 'base64-js'
   }
 }

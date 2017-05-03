@@ -8,6 +8,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { render } from 'react-dom';
 import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
 import React from 'react';
+import thunkMiddleware from 'redux-thunk';
 
 import App from './containers/App';
 import EnsureAuthenticated from './containers/EnsureAuthenticated';
@@ -17,6 +18,7 @@ import Pages from './containers/Pages';
 import reducer from './redux/modules/reducer';
 
 const store = createStore(reducer, applyMiddleware(
+    thunkMiddleware,
     routerMiddleware(browserHistory),
   ),
 );

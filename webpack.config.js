@@ -1,7 +1,10 @@
+const path = require('path');
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
 const webpack = require('webpack');
+
+const config = require('config');
 
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
@@ -47,6 +50,11 @@ module.exports = () => ({
         return module.context && module.context.indexOf('node_modules') !== -1;
       },
     }),
+    new webpack.DefinePlugin({
+      'process.env.AUTH0_CLIENT_ID': JSON.stringify(config.get('auth0.clientId')),
+      'process.env.AUTH0_DOMAIN': JSON.stringify(config.get('auth0.domain')),
+    }),
+
   ],
   resolve: {
     extensions: ['.js', '.jsx'],

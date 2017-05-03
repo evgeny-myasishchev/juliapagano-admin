@@ -1,21 +1,23 @@
-import React from 'react';
-
-import AuthService from '../auth/AuthService';
-
 import './Login.css';
 
-export default class Login extends React.Component {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
+
+import { loginCompleted, loginLoad } from '../redux/modules/auth';
+
+export class Login extends React.Component {
   constructor(props) {
     super(props);
     // this.auth = props.auth;
   }
 
   componentDidMount() {
-    // this.auth.lock.show();
+    this.props.actions.loginLoad();
   }
 
   componentWillUnmount() {
-    // this.auth.lock.hide();
+    this.props.actions.loginCompleted();
   }
 
   render() {
@@ -24,3 +26,20 @@ export default class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  actions: PropTypes.shape({
+    loginLoad: PropTypes.function,
+    loginCompleted: PropTypes.function,
+  }).isRequired,
+};
+
+export default connect(
+    () => ({}),
+    dispatch => ({
+      actions: bindActionCreators({
+        loginCompleted, loginLoad,
+      }, dispatch),
+    }),
+
+)(Login);

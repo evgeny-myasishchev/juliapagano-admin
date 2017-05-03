@@ -1,45 +1,50 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { push, replace } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 import React, { Component, PropTypes } from 'react';
+
+import { login } from '../redux/modules/auth';
 
 class EnsureAuthenticated extends Component {
   componentDidMount() {
-    const { user, actions } = this.props;
-    if (!user) {
-      actions.push('/login');
+    const { idToken, actions, routing } = this.props;
+    console.log('EnsureAuthenticated');
+    console.log(this.props);
+    if (!idToken) {
+      actions.login(routing.locationBeforeTransitions.pathname);
     }
   }
 
   render() {
-    const { user, children } = this.props;
-    if (!user) return null;
+    const { idToken, children } = this.props;
+    if (!idToken) return null;
     return (<div>
-      <h1>Hello, {user.name}</h1>
       { children }
     </div>);
   }
 }
 
 EnsureAuthenticated.propTypes = {
-  user: PropTypes.shape({ name: PropTypes.string }),
+  idToken: PropTypes.string,
   actions: PropTypes.shape({ replace: PropTypes.function }).isRequired,
   children: PropTypes.element.isRequired,
 };
 
 EnsureAuthenticated.defaultProps = {
-  user: null,
+  idToken: null,
 };
 
 export default connect(
     (state, ownProps) =>  // mapStateToProps
        ({
+         idToken: state.auth.idToken,
          children: ownProps.children,
+         routing: state.routing,
        }),
     dispatch => ({
       actions: bindActionCreators({
         replace,
-        push,
+        login,
       }, dispatch),
     }),
 
