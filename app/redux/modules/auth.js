@@ -25,8 +25,6 @@ const lock = new Auth0Lock(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN
 });
 
 export function login(origin) {
-// display lock widget
-  console.log('dispatching /login');
   return (dispatch) => {
     dispatch({ type: LOGIN, origin });
     dispatch(push('/login'));
@@ -49,7 +47,7 @@ export function loginLoad() {
       let returnUrl = '/';
       if (authResult.state) {
         const stateObject = JSON.parse(new Buffer(authResult.state, 'base64').toString('ascii'));
-        returnUrl = returnUrl || stateObject.origin;
+        returnUrl = stateObject.origin || returnUrl;
       }
       dispatch({ type: LOGIN_SUCCESS, idToken: authResult.idToken });
       dispatch(push(returnUrl));
