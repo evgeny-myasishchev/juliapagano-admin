@@ -1,5 +1,3 @@
-import { Buffer } from 'buffer/';
-
 import { push } from 'react-router-redux';
 import Auth0Lock from 'auth0-lock';
 

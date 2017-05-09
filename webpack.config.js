@@ -8,6 +8,11 @@ const config = require('config');
 
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
+const cssLoader = new ExtractTextPlugin({
+  filename: '[name].bundle.css',
+  allChunks: true,
+});
+
 module.exports = () => ({
   entry: {
     app: './app/index.jsx',
@@ -22,7 +27,8 @@ module.exports = () => ({
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.css$/,
-        use: ExtractTextPlugin.extract({
+        // use: ['style-loader', 'css-loader'],
+        use: cssLoader.extract({
           fallback: 'style-loader',
           use: 'css-loader',
         }),
@@ -35,9 +41,7 @@ module.exports = () => ({
     ],
   },
   plugins: [
-    new ExtractTextPlugin({
-      filename: '[name].bundle.css',
-    }),
+    cssLoader,
     new HtmlWebpackPlugin({
       template: './app/templates/index.html',
       filename: 'index.html',
