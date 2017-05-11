@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default*/
+
 import 'bootstrap/dist/css/bootstrap.css';
 
 import './index.css';
