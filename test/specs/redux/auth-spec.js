@@ -7,6 +7,15 @@ import reducer from '../../../app/redux/modules/reducer';
 
 
 describe('redux/modules/auth', () => {
+  beforeEach(() => {
+    const items = {};
+    global.localStorage = (function localStorage() {
+      return {
+        setItem: (key, value) => { items[key] = value; },
+      };
+    }());
+  });
+
   describe('reducer', () => {
     it('should return default state', () => {
       const state = reducer();
