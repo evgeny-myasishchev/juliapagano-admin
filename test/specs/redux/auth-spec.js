@@ -12,6 +12,7 @@ describe('redux/modules/auth', () => {
     global.localStorage = (function localStorage() {
       return {
         setItem: (key, value) => { items[key] = value; },
+        getItem: key => items[key],
       };
     }());
   });
@@ -19,7 +20,7 @@ describe('redux/modules/auth', () => {
   describe('reducer', () => {
     it('should return default state', () => {
       const state = reducer();
-      expect(state.auth).to.eql({ loaded: false });
+      expect(state.auth).to.eql({ origin: null });
     });
 
     it('should provided state for unknown action', () => {

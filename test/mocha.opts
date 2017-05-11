@@ -1,1 +1,1 @@
---compilers js:babel-core/register --require babel-polyfill test/setup.js
+-b --compilers js:babel-core/register --require babel-polyfill test/setup.js

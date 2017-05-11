@@ -7,6 +7,8 @@ const LOGOUT = 'juliapagano-admin/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'juliapagano-admin/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'juliapagano-admin/auth/LOGOUT_FAIL';
 
+const localStorage = global.localStorage;
+
 function initialState() {
   const idTokenJson = localStorage.getItem('id-token');
   return Object.freeze({
