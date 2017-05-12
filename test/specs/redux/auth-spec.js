@@ -1,38 +1,43 @@
 import { expect } from 'chai';
-import _ from 'lodash';
 
-import { load } from '../../../app/redux/modules/auth';
+import { LOGIN_SUCCESS } from '../../../app/redux/modules/auth';
 import fakeState from '../../fix/fakeState';
+import faker from '../../fix/faker';
 import reducer from '../../../app/redux/modules/reducer';
 
 
 describe('redux/modules/auth', () => {
-  beforeEach(() => {
-    const items = {};
-    global.localStorage = (function localStorage() {
-      return {
-        setItem: (key, value) => { items[key] = value; },
-        getItem: key => items[key],
-      };
-    }());
-  });
-
   describe('reducer', () => {
+    function rememberedToken() {
+      return {
+        raw: faker.fake('raw-id-token-{{lorem.word}}'),
+        payload: { fake: faker.fake('fake-payload-{{lorem.word}}') },
+      };
+    }
+
     it('should return default state', () => {
       const state = reducer();
-      expect(state.auth).to.eql({ origin: null });
+      expect(state.auth).to.eql({ origin: null, idToken: null });
     });
 
-    it('should provided state for unknown action', () => {
+    it('should restore idToken from local storage', () => {
+      const idToken = rememberedToken();
+      localStorage.setItem('id-token', JSON.stringify(idToken));
+      const state = reducer();
+      expect(state.auth).to.eql({ origin: null, idToken });
+    });
+
+    it('should return provided state for unknown action', () => {
       const initialState = fakeState();
       const state = reducer(initialState, { type: 'unknown' });
-      expect(state).to.eql(initialState);
+      expect(state.auth).to.eql(initialState.auth);
     });
 
-    it('should return loading state for load action', () => {
+    it('should handle login success and remember token', () => {
+      const idToken = rememberedToken();
       const initialState = fakeState();
-      const state = reducer(initialState, { type: load() });
-      expect(state).to.eql(_.assign(initialState, { auth: { loading: true } }));
+      const state = reducer(initialState, { type: LOGIN_SUCCESS, rawIdToken: idToken.raw, idTokenPayload: idToken.payload });
+      expect(state.auth).to.eql({ ...initialState.auth, idToken });
     });
   });
 });

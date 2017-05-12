@@ -1,13 +1,7 @@
 import { push } from 'react-router-redux';
 
 const LOGIN = 'juliapagano-admin/auth/LOGIN';
-const LOGIN_SUCCESS = 'juliapagano-admin/auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'juliapagano-admin/auth/LOGIN_FAIL';
-const LOGOUT = 'juliapagano-admin/auth/LOGOUT';
-const LOGOUT_SUCCESS = 'juliapagano-admin/auth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'juliapagano-admin/auth/LOGOUT_FAIL';
-
-const localStorage = global.localStorage;
+export const LOGIN_SUCCESS = 'juliapagano-admin/auth/LOGIN_SUCCESS';
 
 function initialState() {
   const idTokenJson = localStorage.getItem('id-token');
@@ -35,39 +29,16 @@ export default function reducer(state = initialState(), action = {}) {
         ...state,
         origin: action.origin,
       };
-    case LOGIN_SUCCESS:
-      localStorage.setItem('id-token', JSON.stringify({
-        raw: action.idToken,
+    case LOGIN_SUCCESS: {
+      const idToken = {
+        raw: action.rawIdToken,
         payload: action.idTokenPayload,
-      }));
-      return {
-        ...state,
-        idToken: action.idToken,
-        idTokenPayload: action.idTokenPayload,
       };
-    case LOGIN_FAIL:
+      localStorage.setItem('id-token', JSON.stringify(idToken));
       return {
-        ...state,
-        idToken: null,
-      // loginError: action.error,
+        ...state, idToken,
       };
-    case LOGOUT:
-      return {
-        ...state,
-        loggingOut: true,
-      };
-    case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        loggingOut: false,
-        user: null,
-      };
-    case LOGOUT_FAIL:
-      return {
-        ...state,
-        loggingOut: false,
-        logoutError: action.error,
-      };
+    }
     default:
       return state;
   }
