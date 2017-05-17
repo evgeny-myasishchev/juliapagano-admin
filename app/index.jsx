@@ -1,6 +1,8 @@
 /* eslint-disable import/no-named-as-default*/
 
 import 'bootstrap/dist/css/bootstrap.css';
+import $ from 'jquery/dist/jquery';
+import 'bootstrap/dist/js/bootstrap';
 
 import './index.css';
 

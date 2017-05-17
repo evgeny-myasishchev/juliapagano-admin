@@ -3,24 +3,11 @@ import './Login.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import Auth0Lock from 'auth0-lock';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import { loginCompleted, loginLoad, loginSuccess } from '../redux/modules/auth';
-
-function createAuth0Lock() {
-  return new Auth0Lock(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN, {
-    container: 'auth-container',
-    auth: {
-      redirectUrl: `${window.location.origin}/login`,
-      responseType: 'token',
-      params: {
-        scope: 'openid name email',
-      },
-    },
-  });
-}
+import auth0LockFactory from '../lib/auth0LockFactory';
 
 export class Login extends React.Component {
   constructor(props) {
@@ -75,7 +62,7 @@ Login.propTypes = {
 
 Login.defaultProps = {
   origin: '/',
-  createAuth0Lock,
+  createAuth0Lock: auth0LockFactory,
 };
 
 export default connect(

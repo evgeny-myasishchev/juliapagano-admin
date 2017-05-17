@@ -20,6 +20,7 @@
     "auth0-lock": "^10.14.0",
     "bluebird": "^3.5.0",
     "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.9",
