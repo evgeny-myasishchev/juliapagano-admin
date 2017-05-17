@@ -5,7 +5,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { login } from '../redux/modules/auth';
 
-class EnsureAuthenticated extends Component {
+export class EnsureAuthenticated extends Component {
   componentDidMount() {
     const { idToken, actions, routing } = this.props;
     if (!idToken) {
@@ -37,6 +37,7 @@ EnsureAuthenticated.defaultProps = {
   idToken: null,
 };
 
+// TODO: Connecting it is not good idea as it'll render children on any state change
 export default connect(
     (state, ownProps) =>  // mapStateToProps
        ({
