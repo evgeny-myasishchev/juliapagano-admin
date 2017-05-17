@@ -63,11 +63,11 @@ describe('Login', () => {
     it('should dispatch login success action and redirect to root', () => {
       const { auth0LockParams, props: { actions } } = setup();
       const authResult = {
-        idToken: faker.fake('id-token-{{lorem.word}}'),
+        rawIdToken: faker.fake('id-token-{{lorem.word}}'),
         idTokenPayload: faker.fake('id-token-payload-{{lorem.word}}'),
       };
       auth0LockParams.on.authenticated(authResult);
-      expect(actions.loginSuccess).to.have.been.calledWithExactly(authResult.idToken, authResult.idTokenPayload);
+      expect(actions.loginSuccess).to.have.been.calledWithExactly(authResult.rawIdToken, authResult.idTokenPayload);
       expect(actions.push).to.have.been.calledWithExactly('/');
     });
 
@@ -75,12 +75,12 @@ describe('Login', () => {
       const { auth0LockParams, props: { actions } } = setup();
       const origin = faker.fake('fake-origin-{{lorem.word}}');
       const authResult = {
-        idToken: faker.fake('id-token-{{lorem.word}}'),
+        rawIdToken: faker.fake('id-token-{{lorem.word}}'),
         idTokenPayload: faker.fake('id-token-payload-{{lorem.word}}'),
         state: new Buffer(JSON.stringify({ origin })).toString('base64'),
       };
       auth0LockParams.on.authenticated(authResult);
-      expect(actions.loginSuccess).to.have.been.calledWithExactly(authResult.idToken, authResult.idTokenPayload);
+      expect(actions.loginSuccess).to.have.been.calledWithExactly(authResult.rawIdToken, authResult.idTokenPayload);
       expect(actions.push).to.have.been.calledWithExactly(origin);
     });
   });

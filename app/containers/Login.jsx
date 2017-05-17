@@ -35,7 +35,7 @@ export class Login extends React.Component {
         const stateObject = JSON.parse(new Buffer(authResult.state, 'base64').toString('ascii'));
         returnUrl = stateObject.origin || returnUrl;
       }
-      actions.loginSuccess(authResult.idToken, authResult.idTokenPayload);
+      actions.loginSuccess(authResult.rawIdToken, authResult.idTokenPayload);
       actions.push(returnUrl);
     });
   }
