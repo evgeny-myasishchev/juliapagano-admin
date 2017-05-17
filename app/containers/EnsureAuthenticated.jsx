@@ -8,8 +8,6 @@ import { login } from '../redux/modules/auth';
 class EnsureAuthenticated extends Component {
   componentDidMount() {
     const { idToken, actions, routing } = this.props;
-    console.log('EnsureAuthenticated');
-    console.log(this.props);
     if (!idToken) {
       actions.login(routing.locationBeforeTransitions.pathname);
     }
@@ -25,9 +23,14 @@ class EnsureAuthenticated extends Component {
 }
 
 EnsureAuthenticated.propTypes = {
-  idToken: PropTypes.string,
+  idToken: PropTypes.shape({ raw: PropTypes.string }),
   actions: PropTypes.shape({ replace: PropTypes.function }).isRequired,
   children: PropTypes.element.isRequired,
+  routing: PropTypes.shape({
+    locationBeforeTransitions: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 EnsureAuthenticated.defaultProps = {
