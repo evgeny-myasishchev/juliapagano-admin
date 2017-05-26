@@ -58,7 +58,11 @@ module.exports = () => ({
       'process.env.AUTH0_CLIENT_ID': JSON.stringify(config.get('auth0.clientId')),
       'process.env.AUTH0_DOMAIN': JSON.stringify(config.get('auth0.domain')),
     }),
-
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery',
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
