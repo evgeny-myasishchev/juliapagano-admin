@@ -1,10 +1,12 @@
 import { push } from 'react-router-redux';
 
+export const ID_TOKEN_KEY = 'juliapagano-admin/id-token';
+
 const LOGIN = 'juliapagano-admin/auth/LOGIN';
 export const LOGIN_SUCCESS = 'juliapagano-admin/auth/LOGIN_SUCCESS';
 
 function initialState() {
-  const idTokenJson = localStorage.getItem('id-token');
+  const idTokenJson = localStorage.getItem(ID_TOKEN_KEY);
   return Object.freeze({
     idToken: idTokenJson ? JSON.parse(idTokenJson) : null,
     origin: null,
@@ -34,7 +36,7 @@ export default function reducer(state = initialState(), action = {}) {
         raw: action.rawIdToken,
         payload: action.idTokenPayload,
       };
-      localStorage.setItem('id-token', JSON.stringify(idToken));
+      localStorage.setItem(ID_TOKEN_KEY, JSON.stringify(idToken));
       return {
         ...state, idToken,
       };

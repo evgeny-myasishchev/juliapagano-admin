@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { LOGIN_SUCCESS } from '../../../app/redux/modules/auth';
+import { LOGIN_SUCCESS, ID_TOKEN_KEY } from '../../../app/redux/modules/auth';
 import fakeState from '../../fix/fakeState';
 import faker from '../../fix/faker';
 import reducer from '../../../app/redux/modules/reducer';
@@ -22,7 +22,7 @@ describe('redux/modules/auth', () => {
 
     it('should restore idToken from local storage', () => {
       const idToken = rememberedToken();
-      localStorage.setItem('id-token', JSON.stringify(idToken));
+      localStorage.setItem(ID_TOKEN_KEY, JSON.stringify(idToken));
       const state = reducer();
       expect(state.auth).to.eql({ origin: null, idToken });
     });
@@ -38,6 +38,7 @@ describe('redux/modules/auth', () => {
       const initialState = fakeState();
       const state = reducer(initialState, { type: LOGIN_SUCCESS, rawIdToken: idToken.raw, idTokenPayload: idToken.payload });
       expect(state.auth).to.eql({ ...initialState.auth, idToken });
+      expect(localStorage.getItem(ID_TOKEN_KEY)).to.eql(JSON.stringify(idToken));
     });
   });
 });
