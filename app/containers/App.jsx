@@ -1,6 +1,10 @@
 import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import React from 'react';
+
+import { logout } from '../redux/modules/auth';
 
 const BootstrapNavLink = ({ label, to }) => (
   <li>
@@ -9,11 +13,15 @@ const BootstrapNavLink = ({ label, to }) => (
 );
 
 BootstrapNavLink.propTypes = {
-  label: React.PropTypes.string.isRequired,
-  to: React.PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
-function App({ children }) {
+function App({ children, actions }) {
+  function signOut(e) {
+    e.preventDefault();
+    actions.logout();
+  }
   return (
     <div>
       <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -37,23 +45,18 @@ function App({ children }) {
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li className="dropdown">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret" /></a>
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  User <span className="caret" />
+                </a>
                 <ul className="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
                   <li role="separator" className="divider" />
-                  <li><a href="#">Separated link</a></li>
-                  <li role="separator" className="divider" />
-                  <li><a href="#">One more separated link</a></li>
+                  <li><a href="#" onClick={e => signOut(e)}>Sign Out</a></li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-
-
       <div className="container">
         {children}
       </div>
@@ -62,7 +65,10 @@ function App({ children }) {
 }
 
 App.propTypes = {
-  children: React.PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired,
+  actions: PropTypes.shape({
+    logout: PropTypes.function,
+  }).isRequired,
 };
 
 export default connect(
@@ -70,4 +76,10 @@ export default connect(
        ({
          children: ownProps.children,
        }),
+    dispatch => ({
+      actions: bindActionCreators({
+        logout,
+      }, dispatch),
+    }),
+
 )(App);

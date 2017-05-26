@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { LOGIN_SUCCESS, ID_TOKEN_KEY } from '../../../app/redux/modules/auth';
+import { ID_TOKEN_KEY, LOGIN_SUCCESS, LOGOUT } from '../../../app/redux/modules/auth';
 import fakeState from '../../fix/fakeState';
 import faker from '../../fix/faker';
 import reducer from '../../../app/redux/modules/reducer';
@@ -39,6 +39,15 @@ describe('redux/modules/auth', () => {
       const state = reducer(initialState, { type: LOGIN_SUCCESS, rawIdToken: idToken.raw, idTokenPayload: idToken.payload });
       expect(state.auth).to.eql({ ...initialState.auth, idToken });
       expect(localStorage.getItem(ID_TOKEN_KEY)).to.eql(JSON.stringify(idToken));
+    });
+
+    it('should handle logout and clear token', () => {
+      const idToken = rememberedToken();
+      const initialState = { ...fakeState(), auth: { idToken, origin: 'fake' } };
+      localStorage.setItem(ID_TOKEN_KEY, JSON.stringify(idToken));
+      const state = reducer(initialState, { type: LOGOUT });
+      expect(state.auth).to.eql({ idToken: null, origin: null });
+      expect(localStorage.getItem(ID_TOKEN_KEY)).to.eql(null);
     });
   });
 });

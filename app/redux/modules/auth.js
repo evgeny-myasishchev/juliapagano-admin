@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 export const ID_TOKEN_KEY = 'juliapagano-admin/id-token';
 
 const LOGIN = 'juliapagano-admin/auth/LOGIN';
+export const LOGOUT = 'juliapagano-admin/auth/LOGOUT';
 export const LOGIN_SUCCESS = 'juliapagano-admin/auth/LOGIN_SUCCESS';
 
 function initialState() {
@@ -20,6 +21,13 @@ export function login(origin) {
   };
 }
 
+export function logout() {
+  return (dispatch) => {
+    dispatch({ type: LOGOUT });
+    dispatch(push('/'));
+  };
+}
+
 export function loginSuccess(idToken, idTokenPayload) {
   return { type: LOGIN_SUCCESS, idToken, idTokenPayload };
 }
@@ -31,6 +39,14 @@ export default function reducer(state = initialState(), action = {}) {
         ...state,
         origin: action.origin,
       };
+    case LOGOUT: {
+      localStorage.setItem(ID_TOKEN_KEY, null);
+      return {
+        ...state,
+        idToken: null,
+        origin: null,
+      };
+    }
     case LOGIN_SUCCESS: {
       const idToken = {
         raw: action.rawIdToken,
