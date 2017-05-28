@@ -11,6 +11,7 @@ function initialState() {
   return Object.freeze({
     idToken: idTokenJson ? JSON.parse(idTokenJson) : null,
     origin: null,
+    signedIn: !!idTokenJson,
   });
 }
 
@@ -45,6 +46,7 @@ export default function reducer(state = initialState(), action = {}) {
         ...state,
         idToken: null,
         origin: null,
+        signedIn: false,
       };
     }
     case LOGIN_SUCCESS: {
@@ -54,7 +56,7 @@ export default function reducer(state = initialState(), action = {}) {
       };
       localStorage.setItem(ID_TOKEN_KEY, JSON.stringify(idToken));
       return {
-        ...state, idToken,
+        ...state, idToken, signedIn: true,
       };
     }
     default:

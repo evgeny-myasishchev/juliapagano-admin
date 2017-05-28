@@ -17,7 +17,7 @@ BootstrapNavLink.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-function App({ children, actions }) {
+export function App({ signedIn, children, actions }) {
   function signOut(e) {
     e.preventDefault();
     actions.logout();
@@ -43,17 +43,19 @@ function App({ children, actions }) {
               <BootstrapNavLink to="/" label="Home" />
               <BootstrapNavLink to="/pages" label="Pages" />
             </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <li className="dropdown">
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  User <span className="caret" />
-                </a>
-                <ul className="dropdown-menu">
-                  <li role="separator" className="divider" />
-                  <li><a href="#" onClick={e => signOut(e)}>Sign Out</a></li>
-                </ul>
-              </li>
-            </ul>
+            { signedIn &&
+              <ul className="nav navbar-nav navbar-right">
+                <li className="dropdown">
+                  <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    User <span className="caret" />
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li role="separator" className="divider" />
+                    <li><a href="#" onClick={e => signOut(e)}>Sign Out</a></li>
+                  </ul>
+                </li>
+              </ul>
+            }
           </div>
         </div>
       </nav>
@@ -66,6 +68,7 @@ function App({ children, actions }) {
 
 App.propTypes = {
   children: PropTypes.element.isRequired,
+  signedIn: PropTypes.bool.isRequired,
   actions: PropTypes.shape({
     logout: PropTypes.function,
   }).isRequired,
@@ -75,6 +78,7 @@ export default connect(
     (state, ownProps) =>  // mapStateToProps
        ({
          children: ownProps.children,
+         signedIn: state.auth.signedIn,
        }),
     dispatch => ({
       actions: bindActionCreators({

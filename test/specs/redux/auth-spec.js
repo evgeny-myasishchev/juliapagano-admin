@@ -17,14 +17,14 @@ describe('redux/modules/auth', () => {
 
     it('should return default state', () => {
       const state = reducer();
-      expect(state.auth).to.eql({ origin: null, idToken: null });
+      expect(state.auth).to.eql({ origin: null, idToken: null, signedIn: false });
     });
 
     it('should restore idToken from local storage', () => {
       const idToken = rememberedToken();
       localStorage.setItem(ID_TOKEN_KEY, JSON.stringify(idToken));
       const state = reducer();
-      expect(state.auth).to.eql({ origin: null, idToken });
+      expect(state.auth).to.eql({ origin: null, idToken, signedIn: true });
     });
 
     it('should return provided state for unknown action', () => {
@@ -37,7 +37,7 @@ describe('redux/modules/auth', () => {
       const idToken = rememberedToken();
       const initialState = fakeState();
       const state = reducer(initialState, { type: LOGIN_SUCCESS, rawIdToken: idToken.raw, idTokenPayload: idToken.payload });
-      expect(state.auth).to.eql({ ...initialState.auth, idToken });
+      expect(state.auth).to.eql({ ...initialState.auth, idToken, signedIn: true });
       expect(localStorage.getItem(ID_TOKEN_KEY)).to.eql(JSON.stringify(idToken));
     });
 
@@ -46,7 +46,7 @@ describe('redux/modules/auth', () => {
       const initialState = { ...fakeState(), auth: { idToken, origin: 'fake' } };
       localStorage.setItem(ID_TOKEN_KEY, JSON.stringify(idToken));
       const state = reducer(initialState, { type: LOGOUT });
-      expect(state.auth).to.eql({ idToken: null, origin: null });
+      expect(state.auth).to.eql({ idToken: null, origin: null, signedIn: false });
       expect(localStorage.getItem(ID_TOKEN_KEY)).to.be.undefined;
     });
   });
