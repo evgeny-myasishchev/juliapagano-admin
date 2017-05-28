@@ -47,7 +47,7 @@ describe('redux/modules/auth', () => {
       localStorage.setItem(ID_TOKEN_KEY, JSON.stringify(idToken));
       const state = reducer(initialState, { type: LOGOUT });
       expect(state.auth).to.eql({ idToken: null, origin: null });
-      expect(localStorage.getItem(ID_TOKEN_KEY)).to.eql(null);
+      expect(localStorage.getItem(ID_TOKEN_KEY)).to.be.undefined;
     });
   });
 });

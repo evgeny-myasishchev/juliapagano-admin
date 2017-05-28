@@ -10,7 +10,8 @@ global.localStorage = (function localStorage() {
   return {
     setItem: (key, value) => { items[key] = value; },
     getItem: key => items[key],
-    reset: () => (items = {}),
+    removeItem: key => delete items[key],
+    clear: () => (items = {}),
   };
 }());
 
@@ -19,7 +20,7 @@ before(() => {
 });
 
 beforeEach(() => {
-  global.localStorage.reset();
+  localStorage.clear();
   nock.cleanAll();
 });
 

@@ -40,7 +40,7 @@ export default function reducer(state = initialState(), action = {}) {
         origin: action.origin,
       };
     case LOGOUT: {
-      localStorage.setItem(ID_TOKEN_KEY, null);
+      localStorage.removeItem(ID_TOKEN_KEY);
       return {
         ...state,
         idToken: null,
