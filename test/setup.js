@@ -2,8 +2,10 @@ import _ from 'lodash';
 import chai from 'chai';
 import nock from 'nock';
 import sinonChai from 'sinon-chai';
+import chaiShallowly from 'chai-shallowly';
 
 chai.use(sinonChai);
+chai.use(chaiShallowly);
 
 global.localStorage = (function localStorage() {
   let items = {};

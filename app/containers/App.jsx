@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { logout } from '../redux/modules/auth';
+import AuthenticatedNavbar from '../components/AuthenticatedNavbar';
 
 const BootstrapNavLink = ({ label, to }) => (
   <li>
@@ -18,8 +19,7 @@ BootstrapNavLink.propTypes = {
 };
 
 export function App({ signedIn, children, actions }) {
-  function signOut(e) {
-    e.preventDefault();
+  function signOut() {
     actions.logout();
   }
   return (
@@ -39,23 +39,7 @@ export function App({ signedIn, children, actions }) {
             <Link className="navbar-brand" to="/">Juliapagano Admin</Link>
           </div>
           <div id="navbar" className="collapse navbar-collapse">
-            <ul className="nav navbar-nav">
-              <BootstrapNavLink to="/" label="Home" />
-              <BootstrapNavLink to="/pages" label="Pages" />
-            </ul>
-            { signedIn &&
-              <ul className="nav navbar-nav navbar-right">
-                <li className="dropdown">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    User <span className="caret" />
-                  </a>
-                  <ul className="dropdown-menu">
-                    <li role="separator" className="divider" />
-                    <li><a href="#" onClick={e => signOut(e)}>Sign Out</a></li>
-                  </ul>
-                </li>
-              </ul>
-            }
+            { signedIn && <AuthenticatedNavbar onSignOut={signOut} /> }
           </div>
         </div>
       </nav>
