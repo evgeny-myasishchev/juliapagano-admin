@@ -18,7 +18,6 @@ export class EnsureAuthenticated extends Component {
     }
   }
 
-
   render() {
     const { idToken, children } = this.props;
     if (!idToken) return null;

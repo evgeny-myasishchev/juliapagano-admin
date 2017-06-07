@@ -21,28 +21,37 @@ describe('EnsureAuthenticated', () => {
       ...params.props,
     };
 
-    const enzymeWrapper = shallow(<EnsureAuthenticated {...props} />);
+    const subject = shallow(<EnsureAuthenticated {...props} />);
 
     return {
       props,
-      enzymeWrapper,
+      subject,
     };
   }
 
-  it('should dispatch login action if no token present', () => {
+  it('should dispatch login action if no token present on component mounted', () => {
     const pathname = faker.fake('current-path-{{lorem.word}}');
-    const { enzymeWrapper, props: { actions } } = setup({ props: { routing: { locationBeforeTransitions: { pathname } } } });
-    enzymeWrapper.instance().componentDidMount();
+    const { subject, props: { actions } } = setup({ props: { routing: { locationBeforeTransitions: { pathname } } } });
+    subject.instance().componentDidMount();
     expect(actions.login).to.have.been.calledWith(pathname);
-    expect(enzymeWrapper.nodes.length).to.eql(1);
-    expect(enzymeWrapper.nodes[0]).to.eql(null);
+    expect(subject.nodes.length).to.eql(1);
+    expect(subject.nodes[0]).to.eql(null);
+  });
+
+  it('should dispatch login action if no token present on component updated', () => {
+    const pathname = faker.fake('current-path-{{lorem.word}}');
+    const { subject, props: { actions } } = setup({ props: { routing: { locationBeforeTransitions: { pathname } } } });
+    subject.instance().componentDidUpdate();
+    expect(actions.login).to.have.been.calledWith(pathname);
+    expect(subject.nodes.length).to.eql(1);
+    expect(subject.nodes[0]).to.eql(null);
   });
 
   it('should render children if token is present', () => {
-    const { enzymeWrapper, props: { actions, children } } = setup({ props: { idToken: { raw: 'fake' } } });
-    enzymeWrapper.instance().componentDidMount();
+    const { subject, props: { actions, children } } = setup({ props: { idToken: { raw: 'fake' } } });
+    subject.instance().componentDidMount();
     expect(actions.login).to.have.callCount(0);
-    expect(enzymeWrapper.nodes.length).to.eql(1);
-    expect(enzymeWrapper.nodes[0].props).to.eql({ children });
+    expect(subject.nodes.length).to.eql(1);
+    expect(subject.nodes[0].props).to.eql({ children });
   });
 });
