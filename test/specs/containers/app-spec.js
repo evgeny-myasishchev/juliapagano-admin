@@ -5,12 +5,13 @@ import sinon from 'sinon';
 
 import { App } from '../../../app/containers/App';
 import AuthenticatedNavbar from '../../../app/components/AuthenticatedNavbar';
-import faker from '../../fix/faker';
+import faker, { mockIdToken } from '../../fix/faker';
 
 describe('App', () => {
   function setup(props = {}) {
     const appProps = {
       signedIn: false,
+      idToken: null,
       children: <div className="fake-children">{faker.fake('fake-children-{{lorem.word}}')}</div>,
       actions: {
         logout: sinon.spy(),
@@ -35,14 +36,14 @@ describe('App', () => {
   });
 
   it('should render AuthenticatedNavbar for signedIn User', () => {
-    const { subject } = setup({ signedIn: true });
+    const { subject } = setup({ signedIn: true, idToken: mockIdToken() });
     expect(subject.find(AuthenticatedNavbar))
       .to.have.length(1)
       .and.to.shallowly.have.props('onSignOut').be.a('function');
   });
 
   it('should dispatch logout on signOut click', () => {
-    const { subject, actions: { logout } } = setup({ signedIn: true });
+    const { subject, actions: { logout } } = setup({ signedIn: true, idToken: mockIdToken() });
     const authenticatedNavbar = subject.find(AuthenticatedNavbar);
     authenticatedNavbar.props().onSignOut();
     expect(logout).to.have.callCount(1);

@@ -9,7 +9,8 @@ import faker from '../../fix/faker';
 
 describe('Login', () => {
   function auth0LockCreator(params = {}) {
-    return function createAuth0Lock() {
+    return function createAuth0Lock(opts) {
+      _.set(params, 'createParams', opts);
       return {
         on: (evt, cb) => { _.set(params, `on.${evt}`, cb); },
         show: (args) => { _.set(params, 'showArgs', args); },
@@ -44,7 +45,7 @@ describe('Login', () => {
     const { enzymeWrapper, auth0LockParams } = setup({ props: { origin } });
     const rendered = enzymeWrapper.instance();
     rendered.componentDidMount();
-    expect(auth0LockParams.showArgs).to.eql({
+    expect(auth0LockParams.createParams).to.eql({
       auth: {
         params: { state: new Buffer(JSON.stringify({ origin })).toString('base64') },
       },

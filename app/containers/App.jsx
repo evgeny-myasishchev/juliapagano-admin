@@ -18,7 +18,13 @@ BootstrapNavLink.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-export function App({ signedIn, children, actions, idToken }) {
+export function App(props) {
+  const {
+    signedIn,
+    children,
+    actions,
+    idToken,
+  } = props;
   function signOut() {
     actions.logout();
   }
