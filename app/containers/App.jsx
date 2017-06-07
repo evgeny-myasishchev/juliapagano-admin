@@ -18,7 +18,7 @@ BootstrapNavLink.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-export function App({ signedIn, children, actions }) {
+export function App({ signedIn, children, actions, idToken }) {
   function signOut() {
     actions.logout();
   }
@@ -39,7 +39,7 @@ export function App({ signedIn, children, actions }) {
             <Link className="navbar-brand" to="/">Juliapagano Admin</Link>
           </div>
           <div id="navbar" className="collapse navbar-collapse">
-            { signedIn && <AuthenticatedNavbar onSignOut={signOut} /> }
+            { signedIn && <AuthenticatedNavbar onSignOut={signOut} userName={idToken.payload.name} /> }
           </div>
         </div>
       </nav>
@@ -52,16 +52,26 @@ export function App({ signedIn, children, actions }) {
 
 App.propTypes = {
   children: PropTypes.element.isRequired,
+  idToken: PropTypes.shape({
+    payload: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
   signedIn: PropTypes.bool.isRequired,
   actions: PropTypes.shape({
     logout: PropTypes.function,
   }).isRequired,
 };
 
+App.defaultProps = {
+  idToken: null,
+};
+
 export default connect(
     (state, ownProps) =>  // mapStateToProps
        ({
          children: ownProps.children,
+         idToken: state.auth.idToken,
          signedIn: state.auth.signedIn,
        }),
     dispatch => ({

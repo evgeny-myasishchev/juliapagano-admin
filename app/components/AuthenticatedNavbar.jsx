@@ -15,7 +15,7 @@ BootstrapNavLink.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-export default function AuthenticatedNavbar({ onSignOut }) {
+export default function AuthenticatedNavbar({ onSignOut, userName }) {
   return (
     <div>
       <ul className="nav navbar-nav">
@@ -24,12 +24,12 @@ export default function AuthenticatedNavbar({ onSignOut }) {
       </ul>
       <ul className="nav navbar-nav navbar-right">
         <li className="dropdown">
-          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    User <span className="caret" />
+          <a name="user-name" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            { userName } <span className="caret" />
           </a>
           <ul className="dropdown-menu">
             <li role="separator" className="divider" />
-            <li><SafeAnchor onClick={e => onSignOut(e)}>Sign Out</SafeAnchor></li>
+            <li><SafeAnchor name="sign-out" onClick={e => onSignOut(e)}>Sign Out</SafeAnchor></li>
           </ul>
         </li>
       </ul>
@@ -39,4 +39,5 @@ export default function AuthenticatedNavbar({ onSignOut }) {
 
 AuthenticatedNavbar.propTypes = {
   onSignOut: PropTypes.func.isRequired,
+  userName: PropTypes.string.isRequired,
 };
