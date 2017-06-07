@@ -8,11 +8,16 @@ import { login } from '../redux/modules/auth';
 
 export class EnsureAuthenticated extends Component {
   componentDidMount() {
+    return this.componentDidUpdate();
+  }
+
+  componentDidUpdate() {
     const { idToken, actions, routing } = this.props;
     if (!idToken) {
       actions.login(routing.locationBeforeTransitions.pathname);
     }
   }
+
 
   render() {
     const { idToken, children } = this.props;

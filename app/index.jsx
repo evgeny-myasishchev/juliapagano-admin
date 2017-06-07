@@ -7,7 +7,8 @@ import './index.css';
 
 import { IndexRoute, Route, Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';
 import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
 import React from 'react';
@@ -20,9 +21,14 @@ import Login from './containers/Login';
 import Pages from './containers/Pages';
 import reducer from './redux/modules/reducer';
 
-const store = createStore(reducer, applyMiddleware(
-    thunkMiddleware,
-    routerMiddleware(browserHistory),
+const composeEnhancers = process.env.BUILD_DEVTOOLS ? composeWithDevTools({}) : compose;
+
+const store = createStore(reducer,
+  composeEnhancers(
+    applyMiddleware(
+      thunkMiddleware,
+      routerMiddleware(browserHistory),
+    ),
   ),
 );
 

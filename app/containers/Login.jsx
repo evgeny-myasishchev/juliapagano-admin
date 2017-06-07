@@ -23,7 +23,7 @@ export class Login extends React.Component {
       },
     });
     this.lock.on('authenticated', (authResult) => {
-      let returnUrl = '/';
+      let returnUrl = origin || '/';
       if (authResult.state) {
         const stateObject = JSON.parse(new Buffer(authResult.state, 'base64').toString('ascii'));
         returnUrl = stateObject.origin || returnUrl;
@@ -65,7 +65,9 @@ Login.defaultProps = {
 };
 
 export default connect(
-    () => ({}),
+    state => ({
+      origin: state.auth.origin,
+    }),
     dispatch => ({
       actions: bindActionCreators({
         push,

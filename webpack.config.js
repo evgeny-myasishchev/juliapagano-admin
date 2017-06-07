@@ -57,6 +57,7 @@ module.exports = () => ({
     new webpack.DefinePlugin({
       'process.env.AUTH0_CLIENT_ID': JSON.stringify(config.get('auth0.clientId')),
       'process.env.AUTH0_DOMAIN': JSON.stringify(config.get('auth0.domain')),
+      'process.env.BUILD_DEVTOOLS': config.get('build.devtools'),
     }),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
