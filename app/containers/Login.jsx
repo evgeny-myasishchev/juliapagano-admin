@@ -13,9 +13,15 @@ export class Login extends React.Component {
   constructor(props) {
     super(props);
 
-    const { actions } = this.props;
+    const { actions, origin } = this.props;
 
-    this.lock = this.props.createAuth0Lock();
+    this.lock = this.props.createAuth0Lock({
+      auth: {
+        params: {
+          state: new Buffer(JSON.stringify({ origin })).toString('base64'),
+        },
+      },
+    });
     this.lock.on('authenticated', (authResult) => {
       let returnUrl = '/';
       if (authResult.state) {
@@ -28,14 +34,7 @@ export class Login extends React.Component {
   }
 
   componentDidMount() {
-    const { origin } = this.props;
-    this.lock.show({
-      auth: {
-        params: {
-          state: new Buffer(JSON.stringify({ origin })).toString('base64'),
-        },
-      },
-    });
+    this.lock.show();
   }
 
   componentWillUnmount() {
