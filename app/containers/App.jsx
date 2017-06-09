@@ -45,7 +45,7 @@ export function App(props) {
             <Link className="navbar-brand" to="/">Juliapagano Admin</Link>
           </div>
           <div id="navbar" className="collapse navbar-collapse">
-            { signedIn && <AuthenticatedNavbar onSignOut={signOut} userName={idToken.payload.name} /> }
+            {/* { (signedIn && idToken) && <AuthenticatedNavbar onSignOut={signOut} userName={idToken.payload.name} /> } */}
           </div>
         </div>
       </nav>

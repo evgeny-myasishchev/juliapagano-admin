@@ -23,6 +23,8 @@ export class Login extends React.Component {
       },
     });
     this.lock.on('authenticated', (authResult) => {
+      console.log('== auth result ==');
+      console.log(authResult);
       let returnUrl = origin || '/';
       if (authResult.state) {
         const stateObject = JSON.parse(new Buffer(authResult.state, 'base64').toString('ascii'));

@@ -1,6 +1,6 @@
 module.exports = {
   auth0: {
-    clientId: 'Nx0izLzYRVQ0zOSaeXw4ttStmg7jvmyQ',
+    clientId: '9DXCgJxk2mHb4oEmeCW7axBkM7BFJdCK',
     domain: 'infora-soft.eu.auth0.com',
   },
 };

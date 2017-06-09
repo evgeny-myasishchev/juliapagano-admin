@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import React from 'react';
 import _ from 'lodash';
+import jwtDecode from 'jwt-decode';
 import sinon from 'sinon';
 
 import { Login } from '../../../app/containers/Login';
@@ -31,19 +32,27 @@ describe('Login', () => {
       ...params.props,
     };
 
-    const enzymeWrapper = shallow(<Login {...props} />);
+    const subject = shallow(<Login {...props} />);
 
     return {
       props,
-      enzymeWrapper,
+      subject,
       auth0LockParams,
     };
   }
 
+  // {
+  //   accessToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik16QX…wd6aSLYMI7LzuiVL6h0zQ9mDGjxXG_Rpd7l0emfJj8V8gd3cA",
+  //   expiresIn: 86400,
+  //   scope: "openid email pages:read",
+  //   idToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik16QX…sf40Xx3p_zQoflUjMZJjfXeSy6h1fxljLUY-rwFWS527tvxtQ",
+  //   tokenType: "Bearer"
+  // }
+
   it('should show lock on mount', () => {
     const origin = faker.fake('fake-origin-{{lorem.word}}');
-    const { enzymeWrapper, auth0LockParams } = setup({ props: { origin } });
-    const rendered = enzymeWrapper.instance();
+    const { subject, auth0LockParams } = setup({ props: { origin } });
+    const rendered = subject.instance();
     rendered.componentDidMount();
     expect(auth0LockParams.createParams).to.eql({
       auth: {
@@ -54,13 +63,30 @@ describe('Login', () => {
 
   it('should hide lock on unmount', () => {
     const origin = faker.fake('fake-origin-{{lorem.word}}');
-    const { enzymeWrapper, auth0LockParams } = setup({ props: { origin } });
-    const rendered = enzymeWrapper.instance();
+    const { subject, auth0LockParams } = setup({ props: { origin } });
+    const rendered = subject.instance();
     rendered.componentWillUnmount();
     expect(auth0LockParams.hideCalled).be.true;
   });
 
   describe('authenticated', () => {
+    function fakeJwtToken(body) {
+      return [
+        { typ: 'JWT' },
+        {
+          iss: faker.fake('iss-{{lorem.word}}'),
+          sub: faker.fake('sub-{{lorem.word}}'),
+          ...body,
+        },
+      ]
+      .map(part => new Buffer(JSON.stringify(part)).toString('base64'))
+      .join('.') + faker.fake('.{{lorem.word}}');
+    }
+
+    function fakeAuthResult() {
+
+    }
+
     it('should dispatch login success action and redirect to root', () => {
       const { auth0LockParams, props: { actions } } = setup();
       const authResult = {
